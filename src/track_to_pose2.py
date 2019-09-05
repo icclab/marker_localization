@@ -99,9 +99,9 @@ class TrackToGoal:
 
             # this quat is the initial rotation of the map we kinda wann counter
             # orientation for map server map
-            # quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
+            quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
             # orientation for clould map when node runs from lap top????
-            quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
+            # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
             # orientation for cloud map 
             # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
             # quatInit = tf.transformations.quaternion_from_euler(0, 0, 0)
@@ -113,10 +113,9 @@ class TrackToGoal:
             euler_angleF = tf.transformations.euler_from_quaternion(quatF)
             # transform radians to degrees
             degrees_angleF = map(degrees, euler_angleF)
-            if True: #10 < degrees_angleF[2] < 170:
-                print ('I am Here!!!')
-                self.robotPose['x'] = self.robotPose['x'] + markerPose['z'] * (1 - cos(euler_angleF[2])) 
-                self.robotPose['y'] = self.robotPose['y'] - markerPose['z'] * sin(euler_angleF[2]) 
+                
+            self.robotPose['x'] = self.robotPose['x'] + markerPose['z'] * (1 - cos(euler_angleF[2])) 
+            self.robotPose['y'] = self.robotPose['y'] - markerPose['z'] * sin(euler_angleF[2]) 
 
             print 'the robot pose is:'
             print 'x: ', self.robotPose['x']
