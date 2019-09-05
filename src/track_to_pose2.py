@@ -98,8 +98,13 @@ class TrackToGoal:
             #quatF = tf.transformations.quaternion_multiply(quatLC, quat1)
 
             # this quat is the initial rotation of the map we kinda wann counter
+            # orientation for map server map
             # quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
-            quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2)
+            # orientation for clould map when node runs from lap top????
+            quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
+            # orientation for cloud map 
+            # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
+            # quatInit = tf.transformations.quaternion_from_euler(0, 0, 0)
             quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
             quat1 = tf.transformations.quaternion_multiply(quatMC, quatLC)
             quatF = tf.transformations.quaternion_multiply(quatMM, quat1)
@@ -142,6 +147,10 @@ class TrackToGoal:
             # publish the pose msg
             self.posePub.publish(msg)
 
+	    # sleep 8 seconds before shutdown
+	    # rospy.logdebug('Sleeping for 8 seconds before shutdown...')
+	    # time.sleep(60)
+	    # rospy.signal_shutdown('Position Determined!!!')
     
     def initPoseDrift(quatMC, MarkerPose):
         pass
