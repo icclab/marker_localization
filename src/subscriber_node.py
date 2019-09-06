@@ -6,17 +6,13 @@ import math
 import random
 import tf
 import time
+
 from nav_msgs.msg import OccupancyGrid
 from ar_track_alvar_msgs.msg import AlvarMarkers
-
 
 class SubscriberNode:
 
     def __init__(self):
-        # Parameters from the .yaml file
-#        self.mapFrame = 'summit_xl_map'
-#        self.baseFootprintFrame = 'summit_xl_base_footprint'
-#        self.resolution = 0.05
         
         # dict that holds the ground pose
         self.initPose = {}
@@ -50,14 +46,12 @@ class SubscriberNode:
         self.markerPose['id'] = -1 
         self.markerPose['sec'] = -1 
 
-	# Robot pose tf listener and read function
+	#  tf listener and read function
         self.robotPoseListener = tf.TransformListener()
         rospy.Timer(rospy.Duration(0.11), self.cameraToBaseLink)
         rospy.Timer(rospy.Duration(0.11), self.map_to_marker)
         
-
         # Subscribers
-
         rospy.Subscriber('/ar_pose_marker', AlvarMarkers, self.markerPoseCallback, \
                     queue_size=100, buff_size=2**24)
 
@@ -120,5 +114,4 @@ class SubscriberNode:
 
         except (IndexError):
             print ('[Sub Node] Cannot Find any Markers!!!!')
-        #else:
-        #    print 'still looking for markers??'
+
