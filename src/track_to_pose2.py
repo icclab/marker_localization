@@ -10,7 +10,6 @@ from math import hypot, atan2, pi, sqrt, degrees, cos, sin
 from geometry_msgs.msg import Quaternion, Twist, PoseWithCovarianceStamped
 from move_base_msgs.msg import MoveBaseGoal, MoveBaseAction
 from subscriber_node import SubscriberNode
-#from ar_track_alvar.msg import AlvarMarkers
 
 ## THE ORIENTATION OF THE MAP IN RELATION OF THE AXI SHOULD BE GIVEN AS 
 ## PARAMETER TO THE PROBLEM
@@ -70,41 +69,21 @@ class TrackToGoal:
         quatLC = [link_to_camera['qx'], link_to_camera['qy'], link_to_camera['qz'], link_to_camera['qw']]
 
 ########## determine the robot pose ####
-    
-    #drift form init pose
-    # c for corner
-#        c = 0.4363332
-#        y = - cos(c) * (markerPose['z'] + link_to_camera['x'])
-#        x = sin(c) * (markerPose['z'] + link_to_camera['x'])
 
         self.robotPose['x'] = map_to_marker['x'] - markerPose['z'] - link_to_camera['x'] 
         self.robotPose['y'] = map_to_marker['y'] - markerPose['y'] - link_to_camera['y'] 
         self.robotPose['z'] = map_to_marker['z'] - markerPose['x'] - link_to_camera['z']
 
-        
-
-
-
-#        print 'the robot pose is:'
-#        print 'x: ', self.robotPose['x']
-#        print 'y: ', self.robotPose['y']            
-#        print 'z: ', self.robotPose['z']
-
 
         if True:  #abs(self.robotPose['z']) < 0.05: # and self.robotPose['x'] < 2:
             
-            # Apply the rotations!!
-            #quat1 = tf.transformations.quaternion_multiply(quatMC, quatMM)
-            #quatF = tf.transformations.quaternion_multiply(quatLC, quat1)
-
             # this quat is the initial rotation of the map we kinda wann counter
             # orientation for map server map
-            quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
+            # quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
             # orientation for clould map when node runs from lap top????
-            # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
+            quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
             # orientation for cloud map 
             # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
-            # quatInit = tf.transformations.quaternion_from_euler(0, 0, 0)
             quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
             quat1 = tf.transformations.quaternion_multiply(quatMC, quatLC)
             quatF = tf.transformations.quaternion_multiply(quatMM, quat1)
@@ -150,9 +129,4 @@ class TrackToGoal:
 	    # rospy.logdebug('Sleeping for 8 seconds before shutdown...')
 	    # time.sleep(60)
 	    # rospy.signal_shutdown('Position Determined!!!')
-    
-    def initPoseDrift(quatMC, MarkerPose):
-        pass
-
-
                 
