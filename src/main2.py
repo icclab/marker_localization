@@ -4,7 +4,7 @@ import rospy
 import time
 
 #from track_to_pose import TrackToGoal
-from track_to_pose2 import TrackToGoal
+from marker_localization import MarkerLocalization
 from which_marker_broadcaster import tfBroad
 
 
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     # Initializes the ROS node
     rospy.init_node('main_node', log_level=rospy.DEBUG)
     # Creates a RobotController object
-    smbg = TrackToGoal()
+    smbg = MarkerLocalization()
     tfb = tfBroad()
     # ROS waits for events
     rospy.spin()
