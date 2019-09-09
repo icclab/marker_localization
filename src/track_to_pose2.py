@@ -43,10 +43,10 @@ class TrackToGoal:
         # set up the Publisher
         self.posePub = rospy.Publisher('/initialpose', PoseWithCovarianceStamped, queue_size = 3, latch=True)
 
-        # Check For goal every minute???
-        rospy.Timer(rospy.Duration(1.0), self.calculateSendGoal)
+        # Check from marker pose every second
+        rospy.Timer(rospy.Duration(1.0), self.calculateMarkerPose)
 
-    def calculateSendGoal(self, event):
+    def calculateMarkerPose(self, event):
         
         markerPose = self.subNode.markerPose
         link_to_camera = self.subNode.markerOffset
