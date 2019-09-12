@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
 #  realsence2_camera
   roscpp
   rospy
-  rviz
+#  rviz
   std_msgs
   tf
 )

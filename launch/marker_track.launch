@@ -6,10 +6,11 @@
 	<arg name="max_track_error" default="0.1" />
 	<!--arg name="max_track_error" default="0.2" /-->
 
-  <arg name="cam_image_topic" default="/camera/rgb/image_raw" />
+  <!--arg name="cam_image_topic" default="/raspicam_node/image" /-->
+  <arg name="cam_image_topic" default="/camera_image_raw" />
   <!--arg name="cam_info_topic" default="/camera/rgb/camera_info" /-->
-  <arg name="cam_info_topic" default="/camera/rgb/camera_info" />
-	<arg name="output_frame" default="/camera_rgb_optical_frame" />
+  <arg name="cam_info_topic" default="/raspicam_node/camera_info" />
+	<arg name="output_frame" default="/camera_link" />
 	<!--arg name="output_frame" default="/camera_link" /-->
 
 	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">

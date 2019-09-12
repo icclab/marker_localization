@@ -1,0 +1,8 @@
+<launch>
+  <!-- launch the raspi node from the launch file in this package -->
+  <include file="$(find marker_localization)/launch/raspi_node.launch"/>
+  <!-- launch the image transform node to change the compressed to image raw -->
+  <include file="$(find marker_localization)/launch/image_transport.launch"/>
+  <!-- launch the aruco alvar package to track the markers -->
+  <include file="$(find marker_localization)/launch/marker_track.launch"/>
+</launch>

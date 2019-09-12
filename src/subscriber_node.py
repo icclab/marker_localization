@@ -59,7 +59,7 @@ class SubscriberNode:
         try:
             # Reads the robot pose from tf
             (translation, rotation) = self.robotPoseListener.lookupTransform\
-                    ('base_link', 'camera_rgb_optical_frame', rospy.Time(0))
+                    ('base_link', 'camera_link', rospy.Time(0))
                     #('camera_rgb_optical_frame', 'base_link', rospy.Time(0))
         # Catch the exception if something is wrong
         except (tf.LookupException, tf.ConnectivityException, \
