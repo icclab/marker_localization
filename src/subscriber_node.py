@@ -10,6 +10,9 @@ import time
 from nav_msgs.msg import OccupancyGrid
 from ar_track_alvar_msgs.msg import AlvarMarkers
 
+## Remember to check the frames of the trasnform at line 65 ## 
+
+
 class SubscriberNode:
 
     def __init__(self):
