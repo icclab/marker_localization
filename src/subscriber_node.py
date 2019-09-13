@@ -97,7 +97,7 @@ class SubscriberNode:
         else:
             rospy.logwarn('Waiting for Marker Transform!!!')
 
-
+    ## Callback of the subscriber 
     def markerPoseCallback(self,data):
 
         try:
