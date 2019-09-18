@@ -41,10 +41,10 @@ class MarkerLocalization:
         time.sleep(10)
         
         # set up the Publisher
-        self.posePub = rospy.Publisher('/initialpose', PoseWithCovarianceStamped, queue_size = 3, latch=True)
+        self.posePub = rospy.Publisher('/summit_xl/initialpose', PoseWithCovarianceStamped, queue_size = 3, latch=True)
 
         # Check from marker pose every second
-        rospy.Timer(rospy.Duration(1.0), self.calculateMarkerPose)
+        rospy.Timer(rospy.Duration(0.05), self.calculateMarkerPose)
 
     def calculateMarkerPose(self, event):
         
@@ -78,10 +78,10 @@ class MarkerLocalization:
 
             
         # this quat is the initial rotation of the map we kinda wann counter
-        # orientation for map server map
-        # quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
+        # orientation for map server map / and summit map
+        quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
         # orientation for clould map when node runs from lap top????
-        quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
+        # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
         # orientation for cloud map 
         # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
         quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
@@ -109,7 +109,7 @@ class MarkerLocalization:
         
         # init the msg
         msg = PoseWithCovarianceStamped()
-        msg.header.frame_id = '/map'
+        msg.header.frame_id = 'summit_xl_map'
         # position 
         msg.pose.pose.position.x = self.robotPose['x']
         msg.pose.pose.position.y = self.robotPose['y']

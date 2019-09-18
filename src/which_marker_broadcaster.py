@@ -6,6 +6,10 @@ from math import hypot, atan2, pi, sqrt, degrees, cos, sin
 
 from subscriber_node import SubscriberNode
 
+'''
+   WE NEED TO ADD ALL THE MARKER FOR THE SUMMIT MAP!!! 
+'''
+
 class tfBroad:
 
     def __init__(self):
@@ -13,7 +17,7 @@ class tfBroad:
         # get the stuff from the subClass
         self.subNode = SubscriberNode()
         # call the function
-        rospy.Timer(rospy.Duration(0.05), self.broadCastTf)
+        rospy.Timer(rospy.Duration(0.03), self.broadCastTf)
 
     def broadCastTf(self, event):
         # get the ID
@@ -69,6 +73,20 @@ class tfBroad:
             # trans = (1.72, 4.66, 0.11)
             # make a quat for the function
             quat = tf.transformations.quaternion_from_euler(0, -1.570796325, 0)
+            # set the name of the marker frame 
+            marker = 'ar_marker_' + str(markerID['id'])
+            # call the function 
+            self.sendTransform(trans, quat, marker)
+	
+	elif markerID['id'] == 17: # in giovanni's office
+            # make the translation
+            # marker from map in the cloud
+            # trans = (3.82, 1.15, 0.11)
+	    # marker from map from map server in the summit robot.
+	    # map is icclab_latest_map.yaml
+            trans = (-17.0, -2.5, 0.11)
+            # make a quat for the function
+            quat = tf.transformations.quaternion_from_euler(0, -1.570796325, -1.570796325)
             # set the name of the marker frame 
             marker = 'ar_marker_' + str(markerID['id'])
             # call the function 
