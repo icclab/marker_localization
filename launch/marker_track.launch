@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-	<arg name="marker_size" default="4.4" />
-	<!--arg name="marker_size" default="13.4" /-->
+    <!-- Depending on the marker choose the size -->
+	<!--arg name="marker_size" default="4.4" /-->
+	<arg name="marker_size" default="13.4" />
 	<arg name="max_new_marker_error" default="0.08" />
 	<arg name="max_track_error" default="0.1" />
 	<!--arg name="max_track_error" default="0.2" /-->
