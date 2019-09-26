@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- launch camera nodes -->
+  <include file="$(find marker_localization)/launch/camera_nodes.launch"/>
   <!-- launch the scripts -->
   <node name="track_to_pose" type="main2.py" pkg="marker_localization" output="screen"/>
 </launch>
