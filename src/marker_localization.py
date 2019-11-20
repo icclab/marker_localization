@@ -32,14 +32,14 @@ class MarkerLocalization:
         self.robotPose['qz'] = 0
         self.robotPose['qw'] = 0
         
-        self.tinit = time.time()
 
         # move Base Msg
         self.subNode = SubscriberNode()
-
-        rospy.loginfo("[Main Node] Wait 10 seconds for the subscribers to be ready!")
-        time.sleep(10)
         
+        rospy.loginfo("[Main Node] Wait 10 seconds for the subscribers to be ready!")
+        # time.sleep(10)
+        
+        self.tinit = time.time()
         # set up the Publisher
         self.posePub = rospy.Publisher('/initialpose', PoseWithCovarianceStamped, queue_size = 3, latch=True)
 
@@ -81,9 +81,10 @@ class MarkerLocalization:
         # orientation for map server map
         # quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
         # orientation for clould map when node runs from lap top????
-        quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
+        angle = -(9*pi)/18
+        quatInit = tf.transformations.quaternion_from_euler(0, 0, angle)
         # orientation for cloud map 
-        # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
+        #quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
         quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
         quat1 = tf.transformations.quaternion_multiply(quatMC, quatLC)
         quatF = tf.transformations.quaternion_multiply(quatMM, quat1)
@@ -106,7 +107,7 @@ class MarkerLocalization:
         # print orientation of the robot (roll, pitch, yaw)
         print 'the pose of the robot is:'        
         print degrees_angleF
-        
+        print quatF        
         # init the msg
         msg = PoseWithCovarianceStamped()
         msg.header.frame_id = '/map'
@@ -119,6 +120,7 @@ class MarkerLocalization:
         msg.pose.pose.orientation.y = quatF[1]
         msg.pose.pose.orientation.z = quatF[2]
         msg.pose.pose.orientation.w = quatF[3]
+        
         # init covariance
         msg.pose.covariance = [0] * 36
 
@@ -132,6 +134,7 @@ class MarkerLocalization:
             # shutdown the ar track alvar node
             # hard coded
             os.system('rosnode kill' + ' /ar_track_alvar')
+            os.system('rosnode kill' + ' /raspicam_node')
             # sleep for 8 seconds
             time.sleep(8)
             # kill this node  
