@@ -28,7 +28,7 @@ class tfBroad:
             # marker from map in the cloud
             trans = (0.2, 0.9, 0.11)
 	        # marker from map on map server
-            trans = (-0.54, 2.07, 0.14)
+            # trans = (-0.54, 2.07, 0.14)
             # make a quat for the function
             quat = tf.transformations.quaternion_from_euler(0, -1.570796325, 3.1415926535)
             # set the name of the marker frame
@@ -65,9 +65,9 @@ class tfBroad:
 
         elif markerID['id'] == 13: # my desk
             # make the translation
- 	        # marker from map in the cloud
+ 	    # marker from map in the cloud
             trans = (0.2, 0.9, 0.11)
-	        # marker from map from map server
+	    # marker from map from map server
             #trans = (-0.54, 2.07, 0.14)
             # make a quat for the function
             quat = tf.transformations.quaternion_from_euler(0, -1.570796325, 3.1415926535)

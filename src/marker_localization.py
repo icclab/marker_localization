@@ -83,7 +83,7 @@ class MarkerLocalization:
         # orientation for clould map when node runs from lap top????
         quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
         # orientation for cloud map 
-        # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
+        #quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
         quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
         quat1 = tf.transformations.quaternion_multiply(quatMC, quatLC)
         quatF = tf.transformations.quaternion_multiply(quatMM, quat1)
