@@ -83,7 +83,7 @@ class SubscriberNode:
         
     def map_to_marker(self, event):
         if self.markerPose['id'] != -1:
-            self.robotPoseListener.waitForTransform('map', 'ar_marker_' + str(self.markerPose['id']), rospy.Time(0), rospy.Duration(4.0))
+            self.robotPoseListener.waitForTransform('map', 'ar_marker_' + str(self.markerPose['id']), rospy.Time(0), rospy.Duration(2.0))
 	    (trans, quat) = self.robotPoseListener.lookupTransform('map', 'ar_marker_' + str(self.markerPose['id']), rospy.Time(0)) 
 
             self.initPose['x'] = trans[0]

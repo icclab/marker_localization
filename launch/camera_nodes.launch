@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
   <!-- launch the raspi node from the launch file in this package -->
   <include file="$(find marker_localization)/launch/raspi_node.launch"/>

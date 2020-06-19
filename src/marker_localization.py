@@ -68,8 +68,9 @@ class MarkerLocalization:
 ####### Transformations #########################
     
         # Get the quat from the transform 
-        quatLC = [link_to_camera['qx'], link_to_camera['qy'], link_to_camera['qz'], link_to_camera['qw']]
-
+       # quatLC = [link_to_camera['qx'], link_to_camera['qy'], link_to_camera['qz'], link_to_camera['qw']]
+	quatLC = [0, 0, 0, 1]
+	print quatLC
 ####### determine the robot pose ################
 
         self.robotPose['x'] = map_to_marker['x'] - markerPose['z'] - link_to_camera['x'] 
@@ -82,32 +83,41 @@ class MarkerLocalization:
         # quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
         # orientation for clould map when node runs from lap top????
         angle = -(9*pi)/18
-        quatInit = tf.transformations.quaternion_from_euler(0, 0, angle)
+        #quatInit = tf.transformations.quaternion_from_euler(0, 0, angle)
         # orientation for cloud map 
-        #quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
+        quatInit = tf.transformations.quaternion_from_euler(0, 0, -3*pi/2)
         quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
         quat1 = tf.transformations.quaternion_multiply(quatMC, quatLC)
         quatF = tf.transformations.quaternion_multiply(quatMM, quat1)
-    
-    
-        euler_angleF = tf.transformations.euler_from_quaternion(quatF)
+    	
+
+	# Normalize the quaternion
+	quatFN = [0, 0, 0, 1]
+	if quatF[0] != 0:	
+	    quatFN[0] = quatF[0]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
+	    quatFN[1] = quatF[1]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
+	    quatFN[2] = quatF[2]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
+	    quatFN[3] = quatF[3]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
+	    
+        euler_angleF = tf.transformations.euler_from_quaternion(quatFN)
         # transform radians to degrees
         degrees_angleF = map(degrees, euler_angleF)
 
+	
         # chnage translation according to orientation             
         self.robotPose['x'] = self.robotPose['x'] + markerPose['z'] * (1 - cos(euler_angleF[2])) 
         self.robotPose['y'] = self.robotPose['y'] - markerPose['z'] * sin(euler_angleF[2]) 
         
         # print the translation (position) of the robot
-        print 'the robot pose is:'
+        print 'the robot position is:'
         print 'x: ', self.robotPose['x']
         print 'y: ', self.robotPose['y']
         print 'z: ', self.robotPose['z']
         
         # print orientation of the robot (roll, pitch, yaw)
-        print 'the pose of the robot is:'        
+        print 'the orientation of the robot is:'        
         print degrees_angleF
-        print quatF        
+        print quatFN        
         # init the msg
         msg = PoseWithCovarianceStamped()
         msg.header.frame_id = '/map'
@@ -116,11 +126,13 @@ class MarkerLocalization:
         msg.pose.pose.position.y = self.robotPose['y']
         msg.pose.pose.position.z = 0.0
         #  orientation
-        msg.pose.pose.orientation.x = quatF[0]
-        msg.pose.pose.orientation.y = quatF[1]
-        msg.pose.pose.orientation.z = quatF[2]
-        msg.pose.pose.orientation.w = quatF[3]
-        
+	
+	# DOES NOT WORK FOR SOME REASON. I GET NOT A NUMBER ERROR	
+        msg.pose.pose.orientation.x = quatFN[0]
+        msg.pose.pose.orientation.y = quatFN[1]
+        msg.pose.pose.orientation.z = quatFN[2]
+        msg.pose.pose.orientation.w = quatFN[3]
+       
         # init covariance
         msg.pose.covariance = [0] * 36
 

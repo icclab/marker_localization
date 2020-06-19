@@ -40,7 +40,7 @@ class tfBroad:
         if markerID['id'] == 11: # west wall
             # make the translation
             # marker from map in the cloud
-            trans = (2.9, 6.0, 0.11)
+            trans = (1.8, 6.5, 0.11)
 	    # marker from map on map server
             # trans = (-3.6, 7.26, 0.11)
             # make a quat for the function
