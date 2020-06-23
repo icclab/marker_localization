@@ -78,12 +78,8 @@ class MarkerLocalization:
 
             
         # this quat is the initial rotation of the map we kinda wann counter
-        # orientation for map server map
-        # quatInit = tf.transformations.quaternion_from_euler(0, 0, -0.436332)
-        # orientation for clould map when node runs from lap top????
-        quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2 -pi/18)
         # orientation for cloud map 
-        # quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4)
+        quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/2)
         quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
         quat1 = tf.transformations.quaternion_multiply(quatMC, quatLC)
         quatF = tf.transformations.quaternion_multiply(quatMM, quat1)
@@ -132,6 +128,7 @@ class MarkerLocalization:
             # shutdown the ar track alvar node
             # hard coded
             os.system('rosnode kill' + ' /ar_track_alvar')
+            os.system('rosnode kill' + ' /raspicam_node')
             # sleep for 8 seconds
             time.sleep(8)
             # kill this node  
