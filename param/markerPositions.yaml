@@ -1,0 +1,32 @@
+marker_id_3:
+    transX: 0.2
+    transY: 0.9
+    transZ: 0.11
+    rotX: 0
+    rotY: -1.570796325
+    rotZ: 3.1415926535
+
+marker_id_12:
+    transX: 1.85
+    transY: 4.5
+    transZ: 0.11
+    rotX: 0
+    rotY: -1.570796325
+    rotZ: 0
+
+marker_id_13:
+    transX: 0.5
+    transY: -0.85
+    transZ: 0.11
+    rotX: 0
+    rotY: -1.570796325
+    rotZ: 0
+
+marker_id_14:
+    transX: 3.82
+    transY: 1.15
+    transZ: 0.11
+    rotX: 0
+    rotY: -1.570796325
+    rotZ: 0
+

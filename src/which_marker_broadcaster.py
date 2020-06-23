@@ -4,6 +4,8 @@ import rospy
 import tf
 from math import hypot, atan2, pi, sqrt, degrees, cos, sin
 
+import yaml
+
 from subscriber_node import SubscriberNode
 
 class tfBroad:
@@ -20,18 +22,15 @@ class tfBroad:
         markerID = self.subNode.markerPose
         # print it
         # rospy.logdebug('the id is %d', markerID['id'])
-        
+ 	
         # Big Markers 13.4 cm side
         if markerID['id'] == 3: # my desk!!
             # make the translation
             # marker from map in the cloud
-            trans = (0.2, 0.9, 0.11)
-            # marker from map on map server
-            # trans = (-0.54, 2.07, 0.14)
-            # make a quat for the function
-            quat = tf.transformations.quaternion_from_euler(0, -1.570796325, 3.1415926535)
+            trans = (rospy.get_param("/track_to_pose/marker_id_3/transX"), rospy.get_param("/track_to_pose/marker_id_3/transY"), rospy.get_param("/track_to_pose/marker_id_3/transZ"))
+            quat = tf.transformations.quaternion_from_euler(rospy.get_param("/track_to_pose/marker_id_3/rotX"),rospy.get_param("/track_to_pose/marker_id_3/rotY"),rospy.get_param("/track_to_pose/marker_id_3/rotZ"))
             # set the name of the marker frame
-            marker = 'ar_marker_' + str(markerID['id'])
+  	    marker = 'ar_marker_' + str(markerID['id'])
             # call the function
             self.sendTransform(trans, quat, marker)
 
@@ -52,13 +51,11 @@ class tfBroad:
         
         elif markerID['id'] == 12: # panos's desk
             # make the translation
-            # marker from map in the cloud
-            trans = (1.85, 4.5, 0.11)
-	    # marker from map from map server
-            # trans = (-1.95, 5.5, 0.14)
-            # make a quat for the function
-            quat = tf.transformations.quaternion_from_euler(0, -1.570796325, 0)
-            # set the name of the marker frame 
+            # marker from map in the clou
+	    trans = (rospy.get_param("/track_to_pose/marker_id_12/transX"), rospy.get_param("/track_to_pose/marker_id_12/transY"), rospy.get_param("/track_to_pose/marker_id_12/transZ"))
+            quat = tf.transformations.quaternion_from_euler(rospy.get_param("/track_to_pose/marker_id_12/rotX"), rospy.get_param("/track_to_pose/marker_id_12/rotY"), rospy.get_param("/track_to_pose/marker_id_12/rotZ"))
+ 
+                        # set the name of the marker frame 
             marker = 'ar_marker_' + str(markerID['id'])
             # call the function 
             self.sendTransform(trans, quat, marker)
@@ -66,13 +63,9 @@ class tfBroad:
         elif markerID['id'] == 13: # franco's desk
             # make the translation
  	    # marker from map in the cloud
-            #trans = (0.2, 0.9, 0.11)
-            trans = (0.5, -0.85, 0.11)
-	    # marker from map from map server
-            # trans = (-0.54, 2.07, 0.14)
-            # make a quat for the function
-            quat = tf.transformations.quaternion_from_euler(0, -1.570796325, 3.1415926535)
-            # set the name of the marker frame 
+            trans = (rospy.get_param("/track_to_pose/marker_id_13/transX"), rospy.get_param("/track_to_pose/marker_id_13/transY"), rospy.get_param("/track_to_pose/marker_id_13/transZ"))
+            quat = tf.transformations.quaternion_from_euler(rospy.get_param("/track_to_pose/marker_id_13/rotX"), rospy.get_param("/track_to_pose/marker_id_13/rotY"), rospy.get_param("/track_to_pose/marker_id_13/rotZ"))
+            #            # set the name of the marker frame 
             marker = 'ar_marker_' + str(markerID['id'])
             # call the function 
             self.sendTransform(trans, quat, marker)
@@ -80,18 +73,20 @@ class tfBroad:
         elif markerID['id'] == 14: # on ali's desk
             # make the translation
             # marker from map in the cloud
-            trans = (3.82, 1.15, 0.11)
-	    # marker from map from map server in robot.
-            # trans = (1.72, 4.66, 0.11)
-            # make a quat for the function
-            quat = tf.transformations.quaternion_from_euler(0, -1.570796325, 0)
-            # set the name of the marker frame 
+            trans = (rospy.get_param("/track_to_pose/marker_id_14/transX"), rospy.get_param("/track_to_pose/marker_id_14/transY"), rospy.get_param("/track_to_pose/marker_id_14/transZ"))
+            quat = tf.transformations.quaternion_from_euler(rospy.get_param("/track_to_pose/marker_id_14/rotX"), rospy.get_param("/track_to_pose/marker_id_14/rotY"), rospy.get_param("/track_to_pose/marker_id_14/rotZ"))
+             # set the name of the marker frame 
             marker = 'ar_marker_' + str(markerID['id'])
             # call the function 
             self.sendTransform(trans, quat, marker)
 
         else:
             print 'No Marker Are Found!!!'
+
+
+
+
+
 
     ## ARGS
     # arg1 :class variables

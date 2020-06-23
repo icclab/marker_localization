@@ -3,5 +3,7 @@
   <!-- launch camera nodes -->
   <include file="$(find marker_localization)/launch/camera_nodes.launch"/>
   <!-- launch the scripts -->
-  <node name="track_to_pose" type="main2.py" pkg="marker_localization" output="screen"/>
+  <node name="track_to_pose" type="main2.py" pkg="marker_localization" output="screen">
+	<rosparam file="$(find marker_localization)/param/markerPositions.yaml" command="load"/>
+  </node>
 </launch>
