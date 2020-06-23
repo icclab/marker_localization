@@ -98,7 +98,7 @@ class MarkerLocalization:
         angle = -(9*pi)/18
         #quatInit = tf.transformations.quaternion_from_euler(0, 0, angle)
         # orientation for cloud map 
-        quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4 -pi/8 - pi/12)
+        quatInit = tf.transformations.quaternion_from_euler(0, 0, pi -pi/4 -pi/8 - pi/12)
         quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
         quat1 = tf.transformations.quaternion_multiply(quatMC, quatLC)
         quatF = tf.transformations.quaternion_multiply(quatMM, quat1)
