@@ -63,10 +63,11 @@ class tfBroad:
             # call the function 
             self.sendTransform(trans, quat, marker)
 
-        elif markerID['id'] == 13: # my desk
+        elif markerID['id'] == 13: # franco's desk
             # make the translation
  	    # marker from map in the cloud
-            trans = (0.2, 0.9, 0.11)
+            #trans = (0.2, 0.9, 0.11)
+            trans = (0.5, -0.85, 0.11)
 	    # marker from map from map server
             # trans = (-0.54, 2.07, 0.14)
             # make a quat for the function

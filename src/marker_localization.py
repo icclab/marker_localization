@@ -44,34 +44,47 @@ class MarkerLocalization:
         self.posePub = rospy.Publisher('/initialpose', PoseWithCovarianceStamped, queue_size = 3, latch=True)
 
         # Check from marker pose every second
-        rospy.Timer(rospy.Duration(1.0), self.calculateMarkerPose)
+        rospy.Timer(rospy.Duration(1.0), self.calculateRobotPose)
 
-    def calculateMarkerPose(self, event):
-        
+    def calculateRobotPose(self, event):
+        # calculates robot Pose 
         markerPose = self.subNode.markerPose
         link_to_camera = self.subNode.markerOffset
         map_to_marker = self.subNode.initPose
-
+	
+	
 
 ####### map_to_marker quaternion ################
         # store the quat in a list
         # minus sign in W element to inverse the quaternion!!! 
         quatMM = [map_to_marker['qx'], map_to_marker['qy'], map_to_marker['qz'], map_to_marker['qw']] 
-
-
-
 ####### Marker Quaternion from alvar ############    
         # Get the quat from the transform 
         quatMC = [markerPose['qx'], markerPose['qy'], markerPose['qz'], -markerPose['qw']]
         
-
 ####### Transformations #########################
     
         # Get the quat from the transform 
-       # quatLC = [link_to_camera['qx'], link_to_camera['qy'], link_to_camera['qz'], link_to_camera['qw']]
+        # quatLC = [link_to_camera['qx'], link_to_camera['qy'], link_to_camera['qz'], link_to_camera['qw']]
 	quatLC = [0, 0, 0, 1]
-	print quatLC
 ####### determine the robot pose ################
+	
+
+ 	print 'Link to camera trans'
+	print 'x: ', link_to_camera['x']
+        print 'y: ', link_to_camera['y']
+        print 'z: ', link_to_camera['z']
+
+	print 'markerPose'
+	print 'x: ', markerPose['x']
+        print 'y: ', markerPose['y']
+        print 'z: ', markerPose['z']
+
+	print 'map to marker '
+	print 'x: ', map_to_marker['x']
+        print 'y: ', map_to_marker['y']
+        print 'z: ', map_to_marker['z']
+
 
         self.robotPose['x'] = map_to_marker['x'] - markerPose['z'] - link_to_camera['x'] 
         self.robotPose['y'] = map_to_marker['y'] - markerPose['y'] - link_to_camera['y'] 
@@ -85,7 +98,7 @@ class MarkerLocalization:
         angle = -(9*pi)/18
         #quatInit = tf.transformations.quaternion_from_euler(0, 0, angle)
         # orientation for cloud map 
-        quatInit = tf.transformations.quaternion_from_euler(0, 0, -3*pi/2)
+        quatInit = tf.transformations.quaternion_from_euler(0, 0, -pi/4 -pi/8 - pi/12)
         quatLC = tf.transformations.quaternion_multiply(quatLC, quatInit)
         quat1 = tf.transformations.quaternion_multiply(quatMC, quatLC)
         quatF = tf.transformations.quaternion_multiply(quatMM, quat1)
@@ -93,11 +106,11 @@ class MarkerLocalization:
 
 	# Normalize the quaternion
 	quatFN = [0, 0, 0, 1]
-	if quatF[0] != 0:	
-	    quatFN[0] = quatF[0]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
-	    quatFN[1] = quatF[1]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
-	    quatFN[2] = quatF[2]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
-	    quatFN[3] = quatF[3]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
+	
+	quatFN[0] = quatF[0]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
+	quatFN[1] = quatF[1]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
+	quatFN[2] = quatF[2]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
+	quatFN[3] = quatF[3]/sqrt(quatF[0]**2 + quatF[1]**2 + quatF[2]**2 + quatF[3]**2)
 	    
         euler_angleF = tf.transformations.euler_from_quaternion(quatFN)
         # transform radians to degrees
